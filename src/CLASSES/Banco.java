@@ -1,4 +1,9 @@
-package CLASSES;
+package banco;
+
+import java.util.InputMismatchException;
+
+/*import java.util.ArrayList;
+import java.util.List;*/
 
 import java.util.Random;
 import java.util.Scanner;
@@ -6,9 +11,12 @@ import java.util.Scanner;
 public class Banco {
 
 	public static void main(String[] args) {
+		// TODO Auto-generated method stub
 		
 		Random aleatorio = new Random();
 		Scanner entradaDados = new Scanner(System.in);
+		
+		//List<Conta> conta = new ArrayList<>();
 
 		int opcao;
 		int valor = 0;
@@ -20,8 +28,8 @@ public class Banco {
 		double emprestimo;
 		
 		do {
-			System.out.println("Olá, seja bem vindo ao BBBank - G5");
-			System.out.println("Bom, bonito, barato");
+			System.out.println("Ola, seja bem vindo ao BBBank.");
+			System.out.println("Bom, Bonito e Barato");
 			System.out.println("O que voce gostaria de fazer hoje?");
 			
 			System.out.println();
@@ -58,6 +66,7 @@ public class Banco {
 					/* =================================== */
 					
 					ContaPoupanca cp = new ContaPoupanca(numero, cpf, aniversarioPoupanca);
+					//conta.add(new ContaPoupanca(numero, cpf, aniversarioPoupanca));
 					
 					opcaoPerfil = '0';
 					valor = 0;
@@ -121,16 +130,31 @@ public class Banco {
 								System.out.println("MENU | CREDITAR");
 								System.out.println();
 								
-								System.out.println("Quanto voce deseja depositar? ");
+								/*System.out.println("Quanto voce deseja depositar? ");
 								System.out.print("R$ ");
-								valor = entradaDados.nextInt();
+								valor = entradaDados.nextInt();*/
+								
+								try {
+									System.out.println("Quanto voce deseja depositar? ");
+									System.out.print("R$ ");
+									valor = entradaDados.nextInt();
+
+								}catch(InputMismatchException erro) {
+									System.out.println("Voce digitou uma letra no lugar de um numero!");
+									valor = 0;
+									
+								}
 								
 								/* ========================= */
 								/* CREDITA UM VALOR NA CONTA */
 								/* ========================= */
 								
-								cp.credito(valor);
+								if(valor != 0) {
+									cp.credito(valor);
 								
+								}
+								
+								entradaDados.nextLine();
 								System.out.println();
 							break;
 							
@@ -138,16 +162,31 @@ public class Banco {
 								System.out.println("MENU | DEBITAR");
 								System.out.println();
 								
-								System.out.println("Quanto voce deseja sacar? ");
+								/*System.out.println("Quanto voce deseja sacar? ");
 								System.out.print("R$ ");
-								valor = entradaDados.nextInt();
+								valor = entradaDados.nextInt();*/
+								
+								try {
+									System.out.println("Quanto voce deseja depositar? ");
+									System.out.print("R$ ");
+									valor = entradaDados.nextInt();
+
+								}catch(InputMismatchException erro) {
+									System.out.println("Voce digitou uma letra no lugar de um numero!");
+									valor = 0;
+									
+								}
 								
 								/* ======================== */
 								/* DEBITA UM VALOR NA CONTA */
 								/* ======================== */
 								
+								if(valor != 0) {
 								cp.debito(valor);
 								
+								}
+								
+								entradaDados.nextLine();
 								System.out.println();
 							break;
 							
@@ -197,6 +236,7 @@ public class Banco {
 					/* =================================== */
 					
 					ContaCorrente cc = new ContaCorrente(numero, cpf);
+					//conta.add(new ContaCorrente(numero, cpf));
 					
 					opcaoPerfil = '0';
 					valor = 0;
@@ -250,25 +290,24 @@ public class Banco {
 								System.out.println();
 				                
 				                do {
-				                	System.out.print("Deseja solicitar um cheque? S/N ");
-				                	opcaoPerfil = entradaDados.next().toUpperCase().charAt(0);
-				                    
-				                    System.out.println();
-				                    //System.out.println("Valor de opcao: "+ opcao);
-				                    
-				                    if(opcaoPerfil != 'S' && opcao != 'N'){ 
-				                    	System.out.println("Opcao invalida!");
-				                    	
-				                	}else if(opcaoPerfil == 'S') {
-				                		cc.pedeTalao();
-				                    	System.out.println("Talao solicitado!");
-				                    
-				                    }else if(opcaoPerfil == 'N') {
-				                    	System.out.println("Se mudar de ideia, entre em contato!");
-				                    	
-				                    }
 				                	
-				                } while(opcaoPerfil != 'S' && opcao != 'N');
+				                    System.out.println("Deseja solicitar um cheque? S/N ");
+						        	opcaoPerfil = entradaDados.next().toUpperCase().charAt(0);
+						        	
+						        	if(opcaoPerfil == 'S' && cc.getContadorTalao() < 3) {
+						                cc.pedeTalao();
+						                
+						                System.out.println("Taloes pedidos ate o momento: "+ cc.getContadorTalao());
+						                    
+						            }else if(cc.getContadorTalao() > 2){
+						            	System.out.println("Voce ja solicitou todos os taloes disponiveis no mes!");
+						            	
+						            }else {
+						                System.out.println("Saldo Atual: " + cc.getSaldo());
+
+						            }
+				                	
+				                } while(opcaoPerfil != 'S' && opcaoPerfil != 'N');
 				                
 				                System.out.println();
 							break;
@@ -277,20 +316,35 @@ public class Banco {
 								System.out.println("MENU | CREDITAR");
 								System.out.println();
 								
-								System.out.println("Quanto voce deseja depositar? ");
+								/*System.out.println("Quanto voce deseja depositar? ");
 								System.out.print("R$ ");
-								valor = entradaDados.nextInt();
+								valor = entradaDados.nextInt();*/
+								
+								try {
+									System.out.println("Quanto voce deseja depositar? ");
+									System.out.print("R$ ");
+									valor = entradaDados.nextInt();
+
+								}catch(InputMismatchException erro) {
+									System.out.println("Voce digitou uma letra no lugar de um numero!");
+									valor = 0;
+									
+								}
 								
 								/* ========================= */
 								/* CREDITA UM VALOR NA CONTA */
 								/* ========================= */
 								
-								cc.credito(valor);
+								if(valor != 0) {
+									cc.credito(valor);
+									
+									cc.gravarMovimentacaoCredito(cc.getContarMovimentacao(), cc.getSaldo(), valor);
+									
+									cc.setContarMovimentacao(cc.getContarMovimentacao() + 1);
+									
+								}
 								
-								cc.gravarMovimentacaoCredito(cc.getContarMovimentacao(), cc.getSaldo(), valor);
-								
-								cc.setContarMovimentacao(cc.getContarMovimentacao() + 1);
-								
+								entradaDados.nextLine();
 								System.out.println();
 							break;
 							
@@ -298,16 +352,31 @@ public class Banco {
 								System.out.println("MENU | DEBITAR");
 								System.out.println();
 								
-								System.out.println("Quanto voce deseja sacar? ");
+								/*System.out.println("Quanto voce deseja sacar? ");
 								System.out.print("R$ ");
-								valor = entradaDados.nextInt();
+								valor = entradaDados.nextInt();*/
+								
+								try {
+									System.out.println("Quanto voce deseja sacar? ");
+									System.out.print("R$ ");
+									valor = entradaDados.nextInt();
+
+								}catch(InputMismatchException erro) {
+									System.out.println("Voce digitou uma letra no lugar de um numero!");
+									valor = 0;
+									
+								}
 								
 								/* ======================== */
 								/* DEBITA UM VALOR NA CONTA */
 								/* ======================== */
 								
-								cc.debito(valor);
+								if(valor != 0) {
+									cc.debito(valor);
 								
+								}
+								
+								entradaDados.nextLine();
 								System.out.println();
 							break;
 							
@@ -335,18 +404,46 @@ public class Banco {
 					}while(opcaoPerfil != '0');
 					
 					do{
-			        	System.out.println("Você atingiu o limite de transações mensais. Deseja solicitar um cheque? S/N");
-			        	opcaoPerfil = entradaDados.next().toUpperCase().charAt(0);
-			            
-			            if(opcaoPerfil == 'S' && cc.getContadorTalao() < 3) {
-			                cc.pedeTalao();
-			                System.out.println("Taloes pedidos ate o momento: "+ cc.getContadorTalao());
-			                    
-			            } else {
-			                System.out.println("Saldo Atual: " + cc.getSaldo());
-			                opcaoPerfil = 'N';
-			            }
-			    		
+
+						if(cc.getContarMovimentacao() < 10) {
+							opcaoPerfil = 'N';
+							
+							if(cc.getContadorTalao() < 3) {
+								System.out.println("Deseja solicitar um cheque? S/N ");
+					        	opcaoPerfil = entradaDados.next().toUpperCase().charAt(0);
+					        	
+					        	if(opcaoPerfil == 'S' && cc.getContadorTalao() < 3) {
+					                cc.pedeTalao();
+					                System.out.println("Taloes pedidos ate o momento: "+ cc.getContadorTalao());
+					                
+					                if(cc.getContadorTalao() == 3){
+					                	System.out.println();
+						            	System.out.println("Voce ja solicitou todos os taloes disponiveis no mes!");
+						            	
+						            }
+					                    
+					            }else {
+					                System.out.println("Saldo Atual: " + cc.getSaldo());
+					                opcaoPerfil = 'N';
+					            }
+					        	
+							}
+							
+						}else {
+							System.out.println("Você atingiu o limite de transações mensais. Deseja solicitar um cheque? S/N");
+				        	opcaoPerfil = entradaDados.next().toUpperCase().charAt(0);
+				        	
+				        	if(opcaoPerfil == 'S' && cc.getContadorTalao() < 3) {
+				                cc.pedeTalao();
+				                System.out.println("Taloes pedidos ate o momento: "+ cc.getContadorTalao());
+				                    
+				            }else {
+				                System.out.println("Saldo Atual: " + cc.getSaldo());
+				                opcaoPerfil = 'N';
+				            }
+							
+						}
+			          
 			    	} while(opcaoPerfil != 'N');
 					
 					cc.listarMovimentacoesConta();
@@ -372,6 +469,7 @@ public class Banco {
 					/* =================================== */
 					
 					ContaEspecial ce = new ContaEspecial(numero, cpf);
+					//conta.add(new ContaEspecial(numero, cpf));
 					
 					opcaoPerfil = '0';
 					valor = 0;
@@ -424,20 +522,35 @@ public class Banco {
 								System.out.println("MENU | CREDITAR");
 								System.out.println();
 								
-								System.out.println("Quanto voce deseja depositar? ");
+								/*System.out.println("Quanto voce deseja depositar? ");
 								System.out.print("R$ ");
-								valor = entradaDados.nextInt();
+								valor = entradaDados.nextInt();*/
+								
+								try {
+									System.out.println("Quanto voce deseja depositar? ");
+									System.out.print("R$ ");
+									valor = entradaDados.nextInt();
+
+								}catch(InputMismatchException erro) {
+									System.out.println("Voce digitou uma letra no lugar de um numero!");
+									valor = 0;
+									
+								}
 								
 								/* ========================= */
 								/* CREDITA UM VALOR NA CONTA */
 								/* ========================= */
 								
-								ce.credito(valor);
+								if(valor != 0) {
+									ce.credito(valor);
+									
+									ce.gravarMovimentacaoCredito(ce.getContarMovimentacao(), ce.getSaldo(), valor);
+									
+									ce.setContarMovimentacao(ce.getContarMovimentacao() + 1);
+									
+								}
 								
-								ce.gravarMovimentacaoCredito(ce.getContarMovimentacao(), ce.getSaldo(), valor);
-								
-								ce.setContarMovimentacao(ce.getContarMovimentacao() + 1);
-								
+								entradaDados.nextLine();
 								System.out.println();
 							break;
 							
@@ -445,16 +558,31 @@ public class Banco {
 								System.out.println("MENU | DEBITAR");
 								System.out.println();
 								
-								System.out.println("Quanto voce deseja sacar? ");
+								/*System.out.println("Quanto voce deseja sacar? ");
 								System.out.print("R$ ");
-								valor = entradaDados.nextInt();
+								valor = entradaDados.nextInt();*/
+								
+								try {
+									System.out.println("Quanto voce deseja depositar? ");
+									System.out.print("R$ ");
+									valor = entradaDados.nextInt();
+
+								}catch(InputMismatchException erro) {
+									System.out.println("Voce digitou uma letra no lugar de um numero!");
+									valor = 0;
+									
+								}
 								
 								/* ======================== */
 								/* DEBITA UM VALOR NA CONTA */
 								/* ======================== */
 								
-								ce.debito(valor, ce.getLimite());
+								if(valor != 0) {
+									ce.debito(valor, ce.getLimite());
 								
+								}
+								
+								entradaDados.nextLine();
 								System.out.println();
 							break;
 							
@@ -505,6 +633,7 @@ public class Banco {
 					/* ================================== */
 					
 					ContaEmpresa co = new ContaEmpresa(numero, cpf, emprestimo);
+					//conta.add(new ContaEmpresa(numero, cpf, emprestimo));
 					
 					opcaoPerfil = '0';
 					valor = 0;
@@ -567,20 +696,34 @@ public class Banco {
 								System.out.println("MENU | CREDITAR");
 								System.out.println();
 								
-								System.out.println("Quanto voce deseja depositar? ");
+								/*System.out.println("Quanto voce deseja depositar? ");
 								System.out.print("R$ ");
-								valor = entradaDados.nextInt();
+								valor = entradaDados.nextInt();*/
+								
+								try {
+									System.out.println("Quanto voce deseja depositar? ");
+									System.out.print("R$ ");
+									valor = entradaDados.nextInt();
+
+								}catch(InputMismatchException erro) {
+									System.out.println("Voce digitou uma letra no lugar de um numero!");
+									valor = 0;
+									
+								}
 								
 								/* ========================= */
 								/* CREDITA UM VALOR NA CONTA */
 								/* ========================= */
 								
-								co.credito(valor);
-								
-								co.gravarMovimentacaoCredito(co.getContarMovimentacao(), co.getSaldo(), valor);
-								
-								co.setContarMovimentacao(co.getContarMovimentacao() + 1);
-								
+								if(valor != 0) {
+									co.credito(valor);
+									
+									co.gravarMovimentacaoCredito(co.getContarMovimentacao(), co.getSaldo(), valor);
+									
+									co.setContarMovimentacao(co.getContarMovimentacao() + 1);
+								}
+
+								entradaDados.nextLine();
 								System.out.println();
 							break;
 							
@@ -588,16 +731,31 @@ public class Banco {
 								System.out.println("MENU | DEBITAR");
 								System.out.println();
 								
-								System.out.println("Quanto voce deseja sacar? ");
+								/*System.out.println("Quanto voce deseja sacar? ");
 								System.out.print("R$ ");
-								valor = entradaDados.nextInt();
+								valor = entradaDados.nextInt();*/
+								
+								try {
+									System.out.println("Quanto voce deseja depositar? ");
+									System.out.print("R$ ");
+									valor = entradaDados.nextInt();
+
+								}catch(InputMismatchException erro) {
+									System.out.println("Voce digitou uma letra no lugar de um numero!");
+									valor = 0;
+									
+								}
 								
 								/* ======================== */
 								/* DEBITA UM VALOR NA CONTA */
 								/* ======================== */
 								
-								co.debito(valor);
+								if(valor != 0) {
+									co.debito(valor);
+									
+								}
 								
+								entradaDados.nextLine();
 								System.out.println();
 							break;
 							
@@ -647,6 +805,7 @@ public class Banco {
 					/* ===================================== */
 					
 					ContaEstudantil ca = new ContaEstudantil(numero, cpf);
+					//conta.add(new ContaEmpresa(numero, cpf));
 					
 					opcaoPerfil = '0';
 					valor = 0;
@@ -698,20 +857,34 @@ public class Banco {
 								System.out.println("MENU | CREDITAR");
 								System.out.println();
 								
-								System.out.println("Quanto voce deseja depositar? ");
+								/*System.out.println("Quanto voce deseja depositar? ");
 								System.out.print("R$ ");
-								valor = entradaDados.nextInt();
+								valor = entradaDados.nextInt();*/
+								
+								try {
+									System.out.println("Quanto voce deseja depositar? ");
+									System.out.print("R$ ");
+									valor = entradaDados.nextInt();
+								
+								}catch(InputMismatchException erro) {
+									System.out.println("Voce digitou uma letra no lugar de um numero!");
+									valor = 0;
+									
+								}
 								
 								/* ========================= */
 								/* CREDITA UM VALOR NA CONTA */
 								/* ========================= */
 								
-								ca.credito(valor);
+								if(valor != 0) {
+									ca.credito(valor);
+									
+									ca.gravarMovimentacaoCredito(ca.getContarMovimentacao(), ca.getSaldo(), valor);
+									
+									ca.setContarMovimentacao(ca.getContarMovimentacao() + 1);
+								}
 								
-								ca.gravarMovimentacaoCredito(ca.getContarMovimentacao(), ca.getSaldo(), valor);
-								
-								ca.setContarMovimentacao(ca.getContarMovimentacao() + 1);
-								
+								entradaDados.nextLine();
 								System.out.println();
 							break;
 							
@@ -719,16 +892,31 @@ public class Banco {
 								System.out.println("MENU | DEBITAR");
 								System.out.println();
 								
-								System.out.println("Quanto voce deseja sacar? ");
+								/*System.out.println("Quanto voce deseja sacar? ");
 								System.out.print("R$ ");
-								valor = entradaDados.nextInt();
+								valor = entradaDados.nextInt();*/
+								
+								try {
+									System.out.println("Quanto voce deseja sacar? ");
+									System.out.print("R$ ");
+									valor = entradaDados.nextInt();
+									
+								}catch(InputMismatchException erro) {
+									System.out.println("Voce digitou uma letra no lugar de um numero!");
+									valor = 0;
+									
+								}
 								
 								/* ======================== */
 								/* DEBITA UM VALOR NA CONTA */
 								/* ======================== */
 								
-								ca.debito(valor);
+								if(valor != 0) {
+									ca.debito(valor);
 								
+								}
+								
+								entradaDados.nextLine();
 								System.out.println();
 							break;
 							
@@ -771,5 +959,5 @@ public class Banco {
 			
 		}while(opcao != '0');
 	}
-}
 
+}
